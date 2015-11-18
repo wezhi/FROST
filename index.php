@@ -16,6 +16,10 @@ $appSecret = "c71e83875012675876b5f9a16c0109cd";
 $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appId&secret=$appSecret";
 echo $url."<hr />";
 
+//$GLOBALS["wx_access_token"] = $res_out->access_token;
+//$GLOBALS["wx_expires_in"] = $res_out->expires_in;
+//$GLOBALS["wx_access_token_time"] = time();
+
 
 $wx = new WeChat_frost($appId,$appSecret);
 echo $wx->access_token."<br />";

@@ -15,11 +15,12 @@ class WeChat_frost
     private $appSecret;
     private $access_token;
     private $expires_in;
+    private $access_token_timeout;
     public function __construct($app_id, $app_secret)
     {
         $this->appId = $app_id;
         $this->appSecret = $app_secret;
-        if (!$this->Get_access_token()){
+        if (!$this->Get_access_token()) {
             die("初始化失败，请提供有效的公众号凭据。");
         }
     }
@@ -42,25 +43,37 @@ class WeChat_frost
         $output = Curl_frost::Get_by_url($url);
         if ($output !== false){
             $res_out = json_decode($output);
-            if (isset($res_out->errcode)){
+            if (isset($res_out->errcode)){  //是否返回的错误消息
                 return false;
             }
             $this->access_token = $res_out->access_token;
             $this->expires_in = $res_out->expires_in;
+            $GLOBALS["access_token_timeout"] = time() + $this->expires_in;
             return true;
         }
         return false;
     }
+
+    /**
+     * 获取微信服务器地址
+     * @param $access_token
+     * @return bool
+     */
     public function Get_server_ip($access_token){
         $url = "https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token=$access_token";
         $output = Curl_frost::Get_by_url($url);
         if ($output !== false){
             $res_out = json_decode($output);
-            if (isset($res_out->errcode)){
+            if (isset($res_out->errcode)){  //是否返回的错误消息
                 return false;
             }
             return $res_out->ip_list;
         }
+        return false;
+    }
+
+    private function Is_timeout_access_token(){
+        //好吧，直接更新至本地文件中.txt或是xml文件中都行，存储一个+expires_in的时间值
         return false;
     }
 }
