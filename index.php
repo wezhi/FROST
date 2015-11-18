@@ -8,8 +8,16 @@
  * Support：         http://www.wezhi12.com
  * Contact：         support@wezhi12.com
  */
- 
+require_once("cls/WeChat_frost.php");
 require_once("cls/Curl_frost.php");
 
-$curl = new Curl_frost();
-var_dump($curl);
+$appId = "wxd5647daf15d1007b";
+$appSecret = "c71e83875012675876b5f9a16c0109cd";
+$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appId&secret=$appSecret";
+echo $url."<hr />";
+
+
+$wx = new WeChat_frost($appId,$appSecret);
+echo $wx->access_token."<br />";
+$server_ip = $wx->Get_server_ip($wx->access_token);
+print_r($server_ip);
