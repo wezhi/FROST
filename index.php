@@ -20,7 +20,6 @@ echo $url."<hr />";
 //$GLOBALS["wx_expires_in"] = $res_out->expires_in;
 //$GLOBALS["wx_access_token_time"] = time();
 
-
 $wx = new WeChat_frost($appId,$appSecret);
 echo $wx->access_token."<br />";
 $server_ip = $wx->Get_server_ip($wx->access_token);
